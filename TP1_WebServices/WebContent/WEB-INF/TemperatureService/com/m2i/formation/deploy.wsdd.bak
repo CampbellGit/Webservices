@@ -1,0 +1,32 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from TemperatureService WSDL service -->
+
+  <service name="Temperature" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://formation.m2i.com"/>
+      <parameter name="wsdlServiceElement" value="TemperatureService"/>
+      <parameter name="schemaQualified" value="http://formation.m2i.com"/>
+      <parameter name="wsdlServicePort" value="Temperature"/>
+      <parameter name="className" value="com.m2i.formation.TemperatureSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Temperature"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getFahrenheit" qname="operNS:getFahrenheit" xmlns:operNS="http://formation.m2i.com" returnQName="retNS:getFahrenheitReturn" xmlns:retNS="http://formation.m2i.com" returnType="rtns:double" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:celsius" xmlns:pns="http://formation.m2i.com" type="tns:double" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getCelsius" qname="operNS:getCelsius" xmlns:operNS="http://formation.m2i.com" returnQName="retNS:getCelsiusReturn" xmlns:retNS="http://formation.m2i.com" returnType="rtns:double" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:fahrenheit" xmlns:pns="http://formation.m2i.com" type="tns:double" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="getFahrenheit getCelsius"/>
+
+  </service>
+</deployment>
